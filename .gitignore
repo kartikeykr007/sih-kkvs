@@ -17,8 +17,7 @@ dist-ssr
 .env
 
 # Database & uploads
-server/data/*.db
-server/data/*.db-journal
+server/data/*.db*
 !server/data/.gitkeep
 server/uploads/*
 !server/uploads/.gitkeep
