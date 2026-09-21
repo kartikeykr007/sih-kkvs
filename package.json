@@ -9,7 +9,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "server": "node server/index.js",
-    "start": "concurrently \"npm run server\" \"npm run dev\""
+    "start": "concurrently \"npm run server\" \"npm run dev\"",
+    "test:audit": "node server/forensic_audit.js"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
