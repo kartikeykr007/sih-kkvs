@@ -1,6 +1,6 @@
 // ParimaN - Universal Database Provider
-// Seamlessly supports local development (Node / better-sqlite3 / node:sqlite)
-// and Vercel Serverless Functions (AWS Lambda /tmp with Node 22+ built-in SQLite)
+// Seamlessly supports local development (Node / node:sqlite / better-sqlite3)
+// and Vercel Serverless Functions (Node 22+ built-in SQLite with /tmp & :memory: fallback)
 
 import fs from 'fs';
 import path from 'path';
@@ -44,10 +44,15 @@ export function getDatabase() {
   // 1. Try Node.js 22+ built-in node:sqlite (zero native compilation, zero node-gyp, 100% cloud & serverless compatible)
   try {
     const { DatabaseSync } = require('node:sqlite');
-    db = new DatabaseSync(dbPath);
+    try {
+      db = new DatabaseSync(dbPath);
+    } catch (pathErr) {
+      console.warn(`Could not open file database at ${dbPath}, falling back to in-memory:`, pathErr.message);
+      db = new DatabaseSync(':memory:');
+    }
     engine = 'node:sqlite';
 
-    // Polyfill pragma helper for better-sqlite3 compatibility
+    // Polyfill pragma helper for SQLite compatibility
     if (!db.pragma) {
       db.pragma = (str) => {
         try {
@@ -58,10 +63,14 @@ export function getDatabase() {
       };
     }
   } catch (err1) {
-    // 2. Fallback to better-sqlite3
+    // 2. Fallback to better-sqlite3 if installed locally
     try {
       const BetterSqlite3 = require('better-sqlite3');
-      db = new BetterSqlite3(dbPath);
+      try {
+        db = new BetterSqlite3(dbPath);
+      } catch (pathErr) {
+        db = new BetterSqlite3(':memory:');
+      }
       engine = 'better-sqlite3';
     } catch (err2) {
       console.error('CRITICAL: Failed to load SQLite engine (node:sqlite or better-sqlite3):', err1?.message, err2?.message);

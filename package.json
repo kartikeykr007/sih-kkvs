@@ -40,8 +40,5 @@
     "react-router-dom": "^7.18.4",
     "recharts": "^3.10.1",
     "uuid": "^14.0.2"
-  },
-  "optionalDependencies": {
-    "better-sqlite3": "^13.0.3"
   }
 }
