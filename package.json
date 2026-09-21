@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "description": "ParimaN - Online Legal Metrology Verification System (SIH 2026)",
+  "engines": {
+    "node": ">=22.x"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -21,7 +24,6 @@
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
-    "better-sqlite3": "^13.0.3",
     "clsx": "^2.1.1",
     "cors": "^2.8.6",
     "date-fns": "^4.4.0",
@@ -38,5 +40,8 @@
     "react-router-dom": "^7.18.4",
     "recharts": "^3.10.1",
     "uuid": "^14.0.2"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^13.0.3"
   }
 }

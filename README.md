@@ -119,6 +119,34 @@ The application will be accessible at:
 
 ---
 
+## 🚀 Deploying to Vercel (1-Click Ready)
+
+ParimaN is configured for zero-friction deployment on **Vercel**:
+
+### Option 1: Vercel Web Dashboard (Recommended)
+1. Fork or push this repository to your GitHub account (`https://github.com/kartikeykr007/sih-kkvs.git`).
+2. Log in to [Vercel](https://vercel.com) and click **"Add New Project"** -> **"Import Git Repository"**.
+3. Select `sih-kkvs`.
+4. Vercel automatically detects Vite:
+   - **Framework Preset:** `Vite`
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+5. Click **"Deploy"**.
+6. That's it! In ~45 seconds, your live production URL is ready.
+
+### Option 2: Vercel CLI
+```bash
+npm install -g vercel
+vercel
+```
+
+### Architecture on Vercel:
+- **Client SPA:** Vite builds static HTML/JS/CSS assets into `dist/` served at the global edge.
+- **Serverless API:** The Express backend is exported as a Vercel Serverless Function via [`api/index.js`](file:///c:/Users/karti/OneDrive/Desktop/Coding/HTML/legal-metrology-system/api/index.js) and configured via [`vercel.json`](file:///c:/Users/karti/OneDrive/Desktop/Coding/HTML/legal-metrology-system/vercel.json).
+- **Database:** Uses Node.js built-in `node:sqlite` in `/tmp` on serverless execution with automatic schema initialization and demo seeding on cold start. All 6 stakeholder demo accounts, instruments, and certificates are fully interactive out of the box!
+
+---
+
 ## 📋 Key Features
 
 - **Tricolor Government Aesthetic:** Clean design complying with National Informatics Centre (NIC) and Digital India design standards.
