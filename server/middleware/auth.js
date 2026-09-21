@@ -1,12 +1,15 @@
 // ParimaN - Auth Middleware
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'pariman_sih2026_demo_secret_key';
+dotenv.config();
+
+const getJwtSecret = () => process.env.JWT_SECRET || 'pariman_sih2026_demo_secret_key';
 
 export function generateToken(user) {
   return jwt.sign(
     { id: user.id, email: user.email, role: user.role, name: user.full_name },
-    JWT_SECRET,
+    getJwtSecret(),
     { expiresIn: '24h' }
   );
 }
@@ -19,7 +22,7 @@ export function authMiddleware(req, res, next) {
 
   try {
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, getJwtSecret());
     req.user = decoded;
     next();
   } catch (err) {

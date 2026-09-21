@@ -5,7 +5,7 @@
   "type": "module",
   "description": "ParimaN - Online Legal Metrology Verification System (SIH 2026)",
   "engines": {
-    "node": ">=22.x"
+    "node": "22.x"
   },
   "scripts": {
     "dev": "vite",

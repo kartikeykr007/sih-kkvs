@@ -1,6 +1,15 @@
-import Database from 'better-sqlite3';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
-const db = new Database('./server/data/pariman.db');
+let db;
+try {
+  const Database = require('better-sqlite3');
+  db = new Database('./server/data/pariman.db');
+} catch (e) {
+  const { DatabaseSync } = require('node:sqlite');
+  db = new DatabaseSync('./server/data/pariman.db');
+}
+
 const BASE = 'http://localhost:3001/api';
 
 async function testAll() {
