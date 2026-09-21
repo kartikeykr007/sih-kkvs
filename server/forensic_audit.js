@@ -1,5 +1,6 @@
-import { db } from './db/database.js';
+import Database from 'better-sqlite3';
 
+const db = new Database('./server/data/pariman.db');
 const BASE = 'http://localhost:3001/api';
 
 async function testAll() {
