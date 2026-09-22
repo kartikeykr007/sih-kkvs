@@ -5,9 +5,22 @@ async function request(url, options = {}) {
   const headers = { 'Content-Type': 'application/json', ...options.headers };
   if (token) headers['Authorization'] = `Bearer ${token}`;
 
-  const res = await fetch(`${API_BASE}${url}`, { ...options, headers });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Request failed');
+  let res;
+  try {
+    res = await fetch(`${API_BASE}${url}`, { ...options, headers });
+  } catch (err) {
+    throw new Error('Network error: Unable to reach the server. Make sure the backend is running.');
+  }
+
+  const text = await res.text();
+  let data;
+  try {
+    data = text ? JSON.parse(text) : {};
+  } catch {
+    throw new Error(`Server returned an invalid response (status ${res.status}). The backend server may not be running.`);
+  }
+
+  if (!res.ok) throw new Error(data.error || `Request failed (status ${res.status})`);
   return data;
 }
 
